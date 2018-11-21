@@ -8,16 +8,16 @@ namespace AnimalCentre.Models.Procedures
 {
     public abstract class Procedure : IProcedure
     {
-        protected Dictionary<Procedure, List<Animal>> procedureHistory;
+        protected Dictionary<Procedure, List<IAnimal>> procedureHistory;
 
-        protected Procedure()
+        public Procedure()
         {
-            this.procedureHistory = new Dictionary<Procedure, List<Animal>>();
+            this.procedureHistory = new Dictionary<Procedure, List<IAnimal>>();
         }
 
         public virtual void DoService(IAnimal animal, int procedureTime)
         {            
-            if (((Animal)animal).ProcedureTime<procedureTime)
+            if (animal.ProcedureTime<procedureTime)
             {
                 throw new ArgumentException("Animal doesn't have enough procedure time");
             }
@@ -37,7 +37,7 @@ namespace AnimalCentre.Models.Procedures
             }
             return sb.ToString().TrimEnd();
         }
-        public IReadOnlyDictionary<Procedure, List<Animal>> ProcedureHistory => this.procedureHistory;
+        public IReadOnlyDictionary<Procedure, List<IAnimal>> ProcedureHistory { get => this.procedureHistory; }
 
     }
 }

@@ -670,11 +670,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\User\\source\\repos\\OOP-Basic\\ExamOOP\\01. Structure_Skeleton (.NET Core)\\AnimalCentre\\AnimalCentre.csproj",
+      "projectUniqueName": "C:\\Users\\User\\source\\repos\\OOPBasicExam\\ExamOOP\\01. Structure_Skeleton (.NET Core)\\AnimalCentre\\AnimalCentre.csproj",
       "projectName": "AnimalCentre",
-      "projectPath": "C:\\Users\\User\\source\\repos\\OOP-Basic\\ExamOOP\\01. Structure_Skeleton (.NET Core)\\AnimalCentre\\AnimalCentre.csproj",
+      "projectPath": "C:\\Users\\User\\source\\repos\\OOPBasicExam\\ExamOOP\\01. Structure_Skeleton (.NET Core)\\AnimalCentre\\AnimalCentre.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\User\\source\\repos\\OOP-Basic\\ExamOOP\\01. Structure_Skeleton (.NET Core)\\AnimalCentre\\obj\\",
+      "outputPath": "C:\\Users\\User\\source\\repos\\OOPBasicExam\\ExamOOP\\01. Structure_Skeleton (.NET Core)\\AnimalCentre\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

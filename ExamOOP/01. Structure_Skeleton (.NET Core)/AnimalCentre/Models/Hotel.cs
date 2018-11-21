@@ -2,6 +2,7 @@
 using AnimalCentre.Models.Contracts;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 
@@ -9,23 +10,19 @@ namespace AnimalCentre.Models
 {
     public class Hotel : IHotel
     {
-        private const int capacityDefault = 10;
-        private Dictionary<string, Animal> animals;
+        private int capacity;
+        private Dictionary<string, IAnimal> animals;
 
         public Hotel()
         {
-            this.Capacity = capacityDefault;
-            this.animals = new Dictionary<string, Animal>();
+            this.capacity=10;
+            this.animals = new Dictionary<string, IAnimal>();
         }
 
-        public int Capacity { get; private set; }
-
-        public IReadOnlyDictionary<string, Animal> Animals => this.animals;
-
         public void Accommodate(IAnimal animal)
-        { 
+        {
             var currenrAnimal = ((Animal)animal);
-            if (animals.Count>this.Capacity)
+            if (animals.Count >= this.capacity)
             {
                 throw new InvalidOperationException("Not enough capacity");
             }
@@ -42,10 +39,18 @@ namespace AnimalCentre.Models
             {
                 throw new ArgumentException($"Animal {animalName} does not exist");
             }
-            Animal currentAnimal = animals.FirstOrDefault(a => a.Key == animalName).Value;
+            IAnimal currentAnimal = animals.FirstOrDefault(a => a.Key == animalName).Value;
             currentAnimal.Owner = owner;
             currentAnimal.IsAdopt = true;
             this.animals.Remove(animalName);
         }
+
+        public IReadOnlyDictionary<string, IAnimal> Animals
+        {
+            get => new ReadOnlyDictionary<string, IAnimal>(this.animals);
+        }
+
+
+
     }
 }

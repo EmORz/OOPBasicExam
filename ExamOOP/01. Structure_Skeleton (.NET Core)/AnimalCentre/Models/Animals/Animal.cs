@@ -10,17 +10,24 @@ namespace AnimalCentre.Models.Animals
         private string name;
         private int happiness;
         private int energy;
+        private int procedureTime;
+        private string owner;
+        private bool isAdopt;
+        private bool isChipped;
+        private bool isVaccinated;
+
+
 
         protected Animal(string name, int happiness, int energy, int procedureTime)
         {
-            Name = name;
-            Happiness = happiness;
-            Energy = energy;
-            ProcedureTime = procedureTime;
-            Owner = "Centre";
-            IsAdopt = false;
-            IsChipped = false;
-            IsVaccinated = false;
+            this.Name = name;
+            this.Happiness = happiness;
+            this.Energy = energy;
+            this.ProcedureTime = procedureTime;
+            this.Owner = "Centre";
+            this.IsAdopt = false;
+            this.IsChipped = false;
+            this.IsVaccinated = false;
         }
 
         public string Name
@@ -38,7 +45,7 @@ namespace AnimalCentre.Models.Animals
             set
             {
 
-                if (value<0 || value>100)
+                if (value<=0 || value>=100)
                 {
                     throw new ArgumentException("Invalid happiness");
                 }
@@ -52,22 +59,17 @@ namespace AnimalCentre.Models.Animals
             get { return energy; }
             set
             {
-                if (value < 0 || value> 100)
+                if (value <= 0 || value>= 100)
                 {
                     throw new ArgumentException("Invalid energy");
                 }
                 energy = value;
             }
         }
-
-        public int ProcedureTime { get;  set; }
-
-        public string Owner { get;  set; }
-
-        public bool IsAdopt { get;  set; }
-
-        public bool IsChipped { get;  set; }
-
-        public bool IsVaccinated { get;  set; }
+        public int ProcedureTime { get => procedureTime; set => procedureTime = value; }
+        public string Owner { get => owner; set => owner = value; }
+        public bool IsAdopt { get => isAdopt; set => isAdopt = value; }
+        public bool IsChipped { get => isChipped; set => isChipped = value; }
+        public bool IsVaccinated { get => isVaccinated; set => isVaccinated = value; }
     }
 }

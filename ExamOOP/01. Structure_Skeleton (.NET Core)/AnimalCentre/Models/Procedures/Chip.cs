@@ -17,20 +17,20 @@ namespace AnimalCentre.Models.Procedures
         public override void DoService(IAnimal animal, int procedureTime)
         {
             base.DoService(animal, procedureTime);
-            Animal currentAnimal = ((Animal)animal);
-            currentAnimal.Happiness -= 5;
-            if (currentAnimal.IsChipped)
+            
+            if (animal.IsChipped)
             {
-                throw new ArgumentException($"{currentAnimal.Name} is already chipped");
+                throw new ArgumentException($"{animal.Name} is already chipped");
             }
-            currentAnimal.IsChipped = true;
-            currentAnimal.ProcedureTime -= procedureTime;
+            animal.Happiness -= 5;
+            animal.IsChipped = true;
+            animal.ProcedureTime -= procedureTime;
 
             if (!procedureHistory.ContainsKey(this))
             {
-                procedureHistory.Add(this, new List<Animal>());
+                procedureHistory.Add(this, new List<IAnimal>());
             }
-            procedureHistory[this].Add(currentAnimal);
+            procedureHistory[this].Add(((Animal)animal));
         }
     }
 }

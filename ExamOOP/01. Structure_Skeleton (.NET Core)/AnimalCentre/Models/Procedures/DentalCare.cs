@@ -17,16 +17,15 @@ namespace AnimalCentre.Models.Procedures
         {
             base.DoService(animal, procedureTime);
             Animal currentAnimal = ((Animal)animal);
-            currentAnimal.IsVaccinated = true;
             currentAnimal.Happiness +=12;
             currentAnimal.Energy += 10;
             ((Animal)animal).ProcedureTime -= procedureTime;
 
             if (!procedureHistory.ContainsKey(this))
             {
-                procedureHistory.Add(this, new List<Animal>());
+                procedureHistory.Add(this, new List<IAnimal>());
             }
-            procedureHistory[this].Add(currentAnimal);
+            procedureHistory[this].Add(((Animal)animal));
         }
     }
 }

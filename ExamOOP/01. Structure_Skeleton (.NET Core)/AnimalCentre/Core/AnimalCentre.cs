@@ -1,5 +1,6 @@
 ﻿using AnimalCentre.Models;
 using AnimalCentre.Models.Animals;
+using AnimalCentre.Models.Contracts;
 using AnimalCentre.Models.Procedures;
 using System;
 using System.Collections.Generic;
@@ -12,32 +13,20 @@ namespace AnimalCentre.Core
     public class AnimalCentre
     {
         Hotel hotel;
-        Chip chip = new Chip();
-        Vaccinate vaccinate = new Vaccinate();
-        Fitness fitness = new Fitness();
-        Play play = new Play();
-        DentalCare dentalCare = new DentalCare() ;
-        NailTrim nailTrim = new NailTrim();
+     
 
-        private Dictionary<string, List<Animal>> history;
-        protected SortedDictionary<string, List<string>> adopted;
-
-        public string chiped = "Chip";
-        public string vaccinated = "Vaccinate";
-        public string fitnessed = "Fitness";
-        public string played = "Play";
-        public string dental = "DentalCare";
-        public string nail = "NailTrim";
+        private Dictionary<string, List<IAnimal>> history;
+        private SortedDictionary<string, List<string>> adopted;
 
 
         public AnimalCentre()
         {
             this.hotel = new Hotel();
-            this.history = new Dictionary<string, List<Animal>>();
+            this.history = new Dictionary<string, List<IAnimal>>();
             this.adopted = new SortedDictionary<string, List<string>>();
         }
-        public void Print()
-        {   
+        internal void Print()
+        {
 
             foreach (var owner in adopted)
             {
@@ -45,10 +34,25 @@ namespace AnimalCentre.Core
                 Console.WriteLine($"    - Adopted animals: {string.Join(" ", owner.Value)}");
             }
         }
+
         public string RegisterAnimal(string type, string name, int energy, int happiness, int procedureTime)
         {
             MethodForRegisterAnimal(type, name, energy, happiness, procedureTime);
-
+            //switch (type)
+            //{
+            //    case "Cat":
+            //        hotel.Accommodate(new Cat(name, happiness, energy, procedureTime));
+            //        break;
+            //    case "Dog":
+            //        hotel.Accommodate(new Dog(name, happiness, energy, procedureTime));
+            //        break;
+            //    case "Lion":
+            //        hotel.Accommodate(new Lion(name, happiness, energy, procedureTime));
+            //        break;
+            //    case "Pig":
+            //        hotel.Accommodate(new Pig(name, happiness, energy, procedureTime));
+            //        break;
+            //}
             return $"Animal {name} registered successfully";
         }
 
@@ -56,10 +60,12 @@ namespace AnimalCentre.Core
         public string Chip(string name, int procedureTime)
         {
 
+            string chiped = "Chip";
             CheckAnimalExist(name);
-            Animal animal = GetAnimal(name);
+            Chip chip = new Chip();
+            IAnimal animal = GetAnimal(name);
             chip.DoService(animal, procedureTime);
-            AddHistory(name, animal, chiped);
+            AddHistory(animal, chiped);
 
             return $"{name} had chip procedure";
 
@@ -68,10 +74,12 @@ namespace AnimalCentre.Core
 
         public string Vaccinate(string name, int procedureTime)
         {
+            string vaccinated = "Vaccinate";
             CheckAnimalExist(name);
-            Animal animal = hotel.Animals.Values.FirstOrDefault(x => x.Name == name);
+            Vaccinate vaccinate = new Vaccinate();
+            IAnimal animal = hotel.Animals.Values.FirstOrDefault(x => x.Name == name);
             vaccinate.DoService(animal, procedureTime);
-            AddHistory(name, animal, vaccinated);
+            AddHistory(animal, vaccinated);
 
             return $"{name} had vaccination procedure";
 
@@ -79,10 +87,12 @@ namespace AnimalCentre.Core
 
         public string Fitness(string name, int procedureTime)
         {
+            string fitnessed = "Fitness";
             CheckAnimalExist(name);
-            Animal animal = GetAnimal(name);
+            Fitness fitness = new Fitness();
+            IAnimal animal = GetAnimal(name);
             fitness.DoService(animal, procedureTime);
-            AddHistory(name, animal, fitnessed);
+            AddHistory(animal, fitnessed);
 
             return $"{name} had fitness procedure";
 
@@ -91,10 +101,12 @@ namespace AnimalCentre.Core
 
         public string Play(string name, int procedureTime)
         {
+            string played = "Play";
             CheckAnimalExist(name);
-            Animal animal = GetAnimal(name);
+            IAnimal animal = GetAnimal(name);
+            Play play = new Play();
             play.DoService(animal, procedureTime);
-            AddHistory(name, animal, played);
+            AddHistory( animal, played);
 
             return $"{name} was playing for {procedureTime} hours";
 
@@ -102,10 +114,13 @@ namespace AnimalCentre.Core
 
         public string DentalCare(string name, int procedureTime)
         {
+            string dental = "DentalCare";
             CheckAnimalExist(name);
-            Animal animal = GetAnimal(name);
+            DentalCare dentalCare = new DentalCare();
+
+            IAnimal animal = GetAnimal(name);
             dentalCare.DoService(animal, procedureTime);
-            AddHistory(name, animal, dental);
+            AddHistory( animal, dental);
 
             return $"{name} had dental care procedure";
 
@@ -113,19 +128,21 @@ namespace AnimalCentre.Core
 
         public string NailTrim(string name, int procedureTime)
         {
+            string nail = "NailTrim";
             CheckAnimalExist(name);
-            Animal animal = GetAnimal(name);
+            IAnimal animal = GetAnimal(name);
+            NailTrim nailTrim = new NailTrim();
+
             nailTrim.DoService(animal, procedureTime);
-            AddHistory(name, animal, nail);
+            AddHistory(animal, nail);
             return $"{name} had nail trim procedure";
 
         }
 
         public string Adopt(string animalName, string owner)
         {
-            //Finds the animal with that name in the hotel and adopts it.
             CheckAnimalExist(animalName);
-            Animal animal =  GetAnimal(animalName);
+            IAnimal animal =  GetAnimal(animalName);
             hotel.Adopt(animalName, owner);
             if (!adopted.ContainsKey(owner))
             {
@@ -135,7 +152,6 @@ namespace AnimalCentre.Core
             if (animal.IsChipped)
             {
                 return $"{animal.Owner} adopted animal with chip";
-
             }
             else
             {
@@ -156,8 +172,8 @@ namespace AnimalCentre.Core
             return stringBuilder.ToString().TrimEnd();
         }
         //Inner private methods
-
-        private Animal GetAnimal(string name)
+ 
+        private IAnimal GetAnimal(string name)
         {
             return hotel.Animals.Values.FirstOrDefault(x => x.Name == name);
         }
@@ -187,11 +203,11 @@ namespace AnimalCentre.Core
             }
         }
 
-        private void AddHistory(string name, Animal animal, string type)
+        private void AddHistory(IAnimal animal, string type)
         {
             if (!history.ContainsKey(type))
             {
-                history.Add(type, new List<Animal>());
+                history.Add(type, new List<IAnimal>());
             }
             history[type].Add(animal);
         }

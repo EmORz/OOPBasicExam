@@ -13,8 +13,8 @@ namespace AnimalCentre.Models.Animals
         }
         public override string ToString()
         {
-            var str = $"Animal type: {this.GetType().Name} - {this.Name} - Happiness: {this.Happiness} - Energy: {this.Energy}";
-            return str;
+            return $"    Animal type: {this.GetType().Name} - {Name} - Happiness: {Happiness} - Energy: {Energy}";
+
         }
     }
 }

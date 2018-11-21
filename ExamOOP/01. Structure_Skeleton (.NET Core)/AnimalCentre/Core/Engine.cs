@@ -33,39 +33,35 @@ namespace AnimalCentre.Core
                             int energy = int.Parse(args[2]);
                             int happiness = int.Parse(args[3]);
                             int procedureTime = int.Parse(args[4]);
-                            result = (animalCentre.RegisterAnimal(type, name, energy, happiness, procedureTime));
+                            Console.WriteLine(animalCentre.RegisterAnimal(type, name, energy, happiness, procedureTime));
                             break;
                         case "Chip":
                             string name1 = args[0];
                             int procedureTime1 = int.Parse(args[1]);
-                            
-                            result = (animalCentre.Chip(name1, procedureTime1));
+                            Console.WriteLine( (animalCentre.Chip(name1, procedureTime1)));
                             break;
                         case "Vaccinate":
-                            result = ( animalCentre.Vaccinate(args[0], int.Parse(args[1])));
-                      
+                            Console.WriteLine((animalCentre.Vaccinate(args[0], int.Parse(args[1]))));                      
                             break;
                         case "Fitness":
-                            result = (  animalCentre.Fitness(args[0], int.Parse(args[1])));
+                            Console.WriteLine(animalCentre.Fitness(args[0], int.Parse(args[1])));
                             break;
                         case "Play":
-                            result = (animalCentre.Play(args[0], int.Parse(args[1])));
+                            Console.WriteLine(animalCentre.Play(args[0], int.Parse(args[1])));
                             break;
                         case "DentalCare":
-                            result = (animalCentre.DentalCare(args[0], int.Parse(args[1])));
-                            break;
-                        case "NailTrim":
                             Console.WriteLine(animalCentre.DentalCare(args[0], int.Parse(args[1])));
                             break;
+                        case "NailTrim":
+                            Console.WriteLine(animalCentre.NailTrim(args[0], int.Parse(args[1])));
+                            break;
                         case "Adopt":
-                            result = (animalCentre.Adopt(args[0], args[1]));
+                            Console.WriteLine(animalCentre.Adopt(args[0], args[1]));
                             break;
                         case "History":
-                            result = (animalCentre.History(args[0]));
+                            Console.WriteLine(animalCentre.History(args[0]));
                             break;
                     }
-                    Console.WriteLine(result);
-
                 }
                 catch (InvalidOperationException ex)
                 {
@@ -75,6 +71,7 @@ namespace AnimalCentre.Core
                 {
                     Console.WriteLine("ArgumentException: " + ex.Message);
                 }
+
                 input = Console.ReadLine();
             }
             animalCentre.Print();
